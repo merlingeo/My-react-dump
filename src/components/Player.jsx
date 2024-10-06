@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function Player({handlePlayerName,...props}){
+export default function Player({...props}){
     const [isEditing, setIsEditing]= useState(false);
     const [playerName , setPlayerName]= useState(props.name);
     function handleClick(){
@@ -12,9 +12,6 @@ export default function Player({handlePlayerName,...props}){
         // console.log('initaialName',playerName);
     }
 
-    if (props.selectedSymbol == props.playSymbol){
-        handlePlayerName(playerName);
-    }
 
 
     return(
