@@ -3,10 +3,17 @@ import { useState } from "react"
 export default function Player({...props}){
     const [isEditing, setIsEditing]= useState(false);
     const [playerName , setPlayerName]= useState(props.name);
+    
+    let functionOnSave = props.getname;
     function handleClick(){
         setIsEditing(isEditing => !isEditing);
         
+        if(isEditing){
+            functionOnSave(props.playSymbol,playerName);
+        }
+        
     }
+
     function handleNameChange(event){
         setPlayerName(event.target.value)
         // console.log('initaialName',playerName);

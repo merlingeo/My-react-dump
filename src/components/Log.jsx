@@ -1,6 +1,6 @@
 export default function Log({gTurns}){
-    const gameTurns = gTurns;
-    console.log(gTurns);
+    const gameTurns = [...gTurns];
+    // console.log(gTurns);
     
     return(
             <ol id="log">

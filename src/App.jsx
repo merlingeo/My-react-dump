@@ -23,6 +23,7 @@ function findActiveSymbol(turn){
 
 function App() {
   const [gameturns, setGameTurns]= useState([]);
+  const[playName, setPlayName] = useState({X : 'Player 1', O : 'Player 2'})
 
   let activeSymbol =findActiveSymbol(gameturns);
   let gameBoard =[...initialGameBoard].map(arr =>[...arr]);
@@ -42,7 +43,7 @@ function App() {
       let thirdSymbol = gameBoard[item[2].row][item[2].column];
 
       if (fstSymbol && (fstSymbol == secSymbol) && (fstSymbol ==thirdSymbol)){
-        winner=fstSymbol;
+        winner= playName[fstSymbol];
       }
     }
   }
@@ -53,7 +54,7 @@ function App() {
     setGameTurns((turn) => {
       let currSymbol = findActiveSymbol(turn);
       const currentTurn = [ {square:{row:rowIndex ,col : colIndex}, pSymbol : currSymbol},
-        ...turn ];gameturns
+        ...turn ];
       return currentTurn;
     });
 
@@ -63,16 +64,29 @@ function App() {
     setGameTurns([]);
   }
 
+  function fetchPlayNameOnSave(symbol,nme){
+    setPlayName(prevName =>{
+      return {
+        ...prevName,
+        [symbol]:nme
+      }
+    }
+
+    )
+  }
+
+  // console.log(playName);
+  
 
    return (
     <main>
       <div id="game-container">
       <ol id="players" className='highlight-player'>
-        <Player  name="Player 1" playSymbol="X" selectedSymbol={activeSymbol} ></Player>
-        <Player name="Player 2" playSymbol="O" selectedSymbol={activeSymbol} ></Player>
+        <Player  name="Player 1" playSymbol="X" selectedSymbol={activeSymbol} getname ={fetchPlayNameOnSave}></Player>
+        <Player name="Player 2" playSymbol="O" selectedSymbol={activeSymbol} getname ={fetchPlayNameOnSave}></Player>
        
       </ol>
-    {(winner || hasDraw) && <GameOver winner={winner} onRematchButtonClick={handleRematch}/>}
+    {(winner || hasDraw) && <GameOver winner={winner} onRematchButtonClick={handleRematch} />}
       <GameBoard onBoxClicked={onCellClick} board={gameBoard}/>
       </div>
 
